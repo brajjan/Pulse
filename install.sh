@@ -688,8 +688,8 @@ create_lxc_container() {
                         local BEST_TEMPLATE_STORAGE=$(pvesm status -content vztmpl 2>/dev/null | tail -n +2 | sort -k6 -rn | head -1 | awk '{print $1}')
                         BEST_TEMPLATE_STORAGE=${BEST_TEMPLATE_STORAGE:-$storage}
                         print_info "Downloading Debian 12 to storage '$BEST_TEMPLATE_STORAGE'..."
-                        pveam download "$BEST_TEMPLATE_STORAGE" debian-12-standard_12.7-1_amd64.tar.zst
-                        TEMPLATE="${BEST_TEMPLATE_STORAGE}:vztmpl/debian-12-standard_12.7-1_amd64.tar.zst"
+                        pveam download "$BEST_TEMPLATE_STORAGE" debian-12-standard_12.12-1_amd64.tar.zst
+                        TEMPLATE="${BEST_TEMPLATE_STORAGE}:vztmpl/debian-12-standard_12.12-1_amd64.tar.zst"
                         ;;
                     u|U)
                         # Find best storage for templates (prefer one with most free space)
@@ -716,7 +716,7 @@ create_lxc_container() {
                             # Find best storage for templates (prefer one with most free space)
                             local BEST_TEMPLATE_STORAGE=$(pvesm status -content vztmpl 2>/dev/null | tail -n +2 | sort -k6 -rn | head -1 | awk '{print $1}')
                             BEST_TEMPLATE_STORAGE=${BEST_TEMPLATE_STORAGE:-$storage}
-                            TEMPLATE="${BEST_TEMPLATE_STORAGE}:vztmpl/debian-12-standard_12.7-1_amd64.tar.zst"
+                            TEMPLATE="${BEST_TEMPLATE_STORAGE}:vztmpl/debian-12-standard_12.12-1_amd64.tar.zst"
                             print_info "Invalid selection, using Debian 12"
                         fi
                         ;;
@@ -724,26 +724,26 @@ create_lxc_container() {
                         # Find best storage for templates (prefer one with most free space)
                         local BEST_TEMPLATE_STORAGE=$(pvesm status -content vztmpl 2>/dev/null | tail -n +2 | sort -k6 -rn | head -1 | awk '{print $1}')
                         BEST_TEMPLATE_STORAGE=${BEST_TEMPLATE_STORAGE:-$storage}
-                        TEMPLATE="${BEST_TEMPLATE_STORAGE}:vztmpl/debian-12-standard_12.7-1_amd64.tar.zst"
+                        TEMPLATE="${BEST_TEMPLATE_STORAGE}:vztmpl/debian-12-standard_12.12-1_amd64.tar.zst"
                         ;;
                 esac
             else
                 # Find best storage for templates (prefer one with most free space)
                 local BEST_TEMPLATE_STORAGE=$(pvesm status -content vztmpl 2>/dev/null | tail -n +2 | sort -k6 -rn | head -1 | awk '{print $1}')
                 BEST_TEMPLATE_STORAGE=${BEST_TEMPLATE_STORAGE:-$storage}
-                TEMPLATE="${BEST_TEMPLATE_STORAGE}:vztmpl/debian-12-standard_12.7-1_amd64.tar.zst"
+                TEMPLATE="${BEST_TEMPLATE_STORAGE}:vztmpl/debian-12-standard_12.12-1_amd64.tar.zst"
             fi
         else
             # Find best storage for templates (prefer one with most free space)
             local BEST_TEMPLATE_STORAGE=$(pvesm status -content vztmpl 2>/dev/null | tail -n +2 | sort -k6 -rn | head -1 | awk '{print $1}')
             BEST_TEMPLATE_STORAGE=${BEST_TEMPLATE_STORAGE:-$storage}
-            TEMPLATE="${BEST_TEMPLATE_STORAGE}:vztmpl/debian-12-standard_12.7-1_amd64.tar.zst"
+            TEMPLATE="${BEST_TEMPLATE_STORAGE}:vztmpl/debian-12-standard_12.12-1_amd64.tar.zst"
         fi
     else
         # Quick mode - find best storage for templates
         local BEST_TEMPLATE_STORAGE=$(pvesm status -content vztmpl 2>/dev/null | tail -n +2 | sort -k6 -rn | head -1 | awk '{print $1}')
         BEST_TEMPLATE_STORAGE=${BEST_TEMPLATE_STORAGE:-$storage}
-        TEMPLATE="${BEST_TEMPLATE_STORAGE}:vztmpl/debian-12-standard_12.7-1_amd64.tar.zst"
+        TEMPLATE="${BEST_TEMPLATE_STORAGE}:vztmpl/debian-12-standard_12.12-1_amd64.tar.zst"
     fi
     
     # Download template if it doesn't exist
@@ -762,13 +762,13 @@ create_lxc_container() {
         # Extract storage name from template path
         local TEMPLATE_STORAGE="${TEMPLATE%%:*}"
         print_info "Template not found, downloading Debian 12 to storage '$TEMPLATE_STORAGE'..."
-        if ! pveam download "$TEMPLATE_STORAGE" debian-12-standard_12.7-1_amd64.tar.zst; then
+        if ! pveam download "$TEMPLATE_STORAGE" debian-12-standard_12.12-1_amd64.tar.zst; then
             print_error "Failed to download template. Please check your internet connection and try again."
-            print_info "You can manually download with: pveam download $TEMPLATE_STORAGE debian-12-standard_12.7-1_amd64.tar.zst"
+            print_info "You can manually download with: pveam download $TEMPLATE_STORAGE debian-12-standard_12.12-1_amd64.tar.zst"
             exit 1
         fi
         # Verify it was downloaded
-        if ! pveam list "$TEMPLATE_STORAGE" 2>/dev/null | grep -q "debian-12-standard_12.7-1_amd64.tar.zst"; then
+        if ! pveam list "$TEMPLATE_STORAGE" 2>/dev/null | grep -q "debian-12-standard_12.12-1_amd64.tar.zst"; then
             print_error "Template download succeeded but file not found in storage"
             exit 1
         fi
